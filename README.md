@@ -1,73 +1,161 @@
-# Welcome to your Lovable project
 
-## Project info
+# Copy Agents Hub
 
-**URL**: https://lovable.dev/projects/c8221e54-e61b-476a-a17f-59d4db411d4b
+Uma aplicação web profissional para geração de copy através de agentes de IA integrados com n8n.
 
-## How can I edit this code?
+## 🚀 Tecnologias
 
-There are several ways of editing your application.
+- **Frontend**: React 18 + TypeScript + Vite
+- **Styling**: Tailwind CSS v3
+- **UI Components**: shadcn/ui
+- **Autenticação**: Supabase Auth
+- **Estado**: React Query + Axios
+- **Deploy**: Vercel (frontend) + Supabase (backend)
 
-**Use Lovable**
+## 🎨 Design System
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c8221e54-e61b-476a-a17f-59d4db411d4b) and start prompting.
+### Cores
+- **Primary Background**: `#0f1116`
+- **Card Background**: `#1b1e25`
+- **Border**: `#2a2d35`
+- **Accent Gold**: `#d4af37`
+- **Text Light**: `#e5e5e5`
+- **Text Muted**: `#a0a0a0`
 
-Changes made via Lovable will be committed automatically to this repo.
+## ⚙️ Configuração
 
-**Use your preferred IDE**
+### 1. Instalar dependências
+```bash
+pnpm install
+# ou
+npm install
+```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 2. Configurar variáveis de ambiente
+Crie um arquivo `.env.local` na raiz do projeto:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+```env
+VITE_SUPABASE_URL=sua_url_do_supabase
+VITE_SUPABASE_ANON_KEY=sua_chave_anonima_do_supabase
+```
 
-Follow these steps:
+### 3. Configurar Supabase
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Execute os seguintes comandos SQL no Supabase:
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+```sql
+-- Criar tabela de usuários (se necessário)
+create table if not exists auth.users (
+  id uuid primary key default uuid_generate_v4(),
+  email text unique not null,
+  created_at timestamptz default now()
+);
 
-# Step 3: Install the necessary dependencies.
-npm i
+-- Habilitar RLS
+alter table auth.users enable row level security;
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+-- Política de acesso
+create policy "Users can view own profile" 
+  on auth.users for select 
+  using ( auth.uid() = id );
+```
+
+### 4. Configurar webhook n8n
+
+No arquivo `src/hooks/useAgentAPI.ts`, substitua:
+```typescript
+const WEBHOOK_URL = 'https://SEU-DOMINIO/webhook/agents-copy'
+```
+
+## 🏃‍♂️ Executar localmente
+
+```bash
+pnpm dev
+# ou
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Acesse: `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 📱 Funcionalidades
 
-**Use GitHub Codespaces**
+### Autenticação
+- Login/registro com email e senha
+- Sessão persistente
+- Rotas protegidas
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Dashboard
+- 6 cards de agentes de copy:
+  - 📝 Briefing de Campanha
+  - 📱 Sequência de Stories
+  - 🖼️ Sequência de Carrosséis
+  - 🎬 Roteiro de Reels
+  - 💬 Mensagens de WhatsApp
+  - ✉️ Sequência de E-mails
 
-## What technologies are used for this project?
+### Integração n8n
+- POST request para webhook configurável
+- Loading states durante geração
+- Painel de resultado com copy gerado
+- Funcionalidade de copiar texto
 
-This project is built with:
+## 🎯 API do n8n
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+O webhook deve receber:
+```json
+{
+  "agent": "agent-id"
+}
+```
 
-## How can I deploy this project?
+E retornar:
+```json
+{
+  "copy": "texto gerado pelo agente",
+  "success": true
+}
+```
 
-Simply open [Lovable](https://lovable.dev/projects/c8221e54-e61b-476a-a17f-59d4db411d4b) and click on Share -> Publish.
+## 📱 Responsividade
 
-## Can I connect a custom domain to my Lovable project?
+- **Desktop**: Grid 3x2 (6 cards)
+- **Mobile**: Grid 2x3 (cards empilhados)
+- Design totalmente responsivo
 
-Yes, you can!
+## 🚀 Deploy
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Vercel (Frontend)
+1. Conecte seu repositório GitHub ao Vercel
+2. Configure as variáveis de ambiente
+3. Deploy automático a cada push na main
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+### Supabase (Backend)
+1. Crie um projeto no Supabase
+2. Configure autenticação por email
+3. Execute os scripts SQL necessários
+
+## 🔧 Desenvolvimento
+
+### Estrutura do projeto
+```
+src/
+├── components/       # Componentes reutilizáveis
+├── contexts/        # Contextos React (Auth)
+├── data/           # Dados estáticos (agents)
+├── hooks/          # Hooks customizados
+├── lib/            # Utilitários (supabase)
+├── pages/          # Páginas da aplicação
+└── types/          # Tipos TypeScript
+```
+
+### Scripts disponíveis
+```bash
+pnpm dev          # Servidor de desenvolvimento
+pnpm build        # Build para produção
+pnpm preview      # Preview do build
+pnpm lint         # Verificar código
+```
+
+## 📄 Licença
+
+MIT License - veja o arquivo LICENSE para detalhes.

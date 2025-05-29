@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,19 +36,12 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -96,6 +90,25 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-bg-primary text-text-light font-sans;
+    min-height: 100vh;
+  }
+
+  .copy-agents-bg {
+    background: #0f1116;
+  }
+}
+
+@layer components {
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+  }
+  
+  .gold-accent {
+    color: #d4af37;
+  }
+  
+  .spinner {
+    @apply animate-spin rounded-full h-8 w-8 border-b-2 border-accent-gold;
   }
 }
