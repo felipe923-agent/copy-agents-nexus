@@ -1,22 +1,15 @@
 
 import React from 'react'
-import { useAuth } from '@/contexts/AuthContext'
 import { agents } from '@/data/agents'
 import { AgentCard } from '@/components/AgentCard'
 import { ResultPanel } from '@/components/ResultPanel'
 import { useAgentAPI } from '@/hooks/useAgentAPI'
-import { Button } from '@/components/ui/button'
 
 export const DashboardPage = () => {
-  const { user, signOut } = useAuth()
   const { loading, result, callAgent, clearResult } = useAgentAPI()
 
   const handleAgentClick = (agentId: string) => {
     callAgent(agentId)
-  }
-
-  const handleSignOut = async () => {
-    await signOut()
   }
 
   return (
@@ -25,17 +18,6 @@ export const DashboardPage = () => {
       <header className="border-b border-border-card bg-bg-card">
         <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-xl font-semibold text-text-light">Copy Agents Hub</h1>
-          <div className="flex items-center gap-4">
-            <span className="text-text-muted text-sm">{user?.email}</span>
-            <Button
-              onClick={handleSignOut}
-              variant="outline"
-              size="sm"
-              className="border-border-card text-text-muted hover:bg-accent-gold hover:text-bg-primary"
-            >
-              Sair
-            </Button>
-          </div>
         </div>
       </header>
 
