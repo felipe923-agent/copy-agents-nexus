@@ -6,6 +6,13 @@ export interface Agent {
   description: string
 }
 
+export interface ChatMessage {
+  id: string
+  content: string
+  role: 'user' | 'assistant'
+  timestamp: Date
+}
+
 export interface WebhookResponse {
   copy: string
   success?: boolean

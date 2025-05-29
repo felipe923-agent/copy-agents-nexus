@@ -4,38 +4,38 @@ import { Agent } from '@/types/agents'
 export const agents: Agent[] = [
   {
     id: 'briefing-campanha',
-    title: 'Briefing de Campanha',
-    emoji: '📝',
-    description: 'Crie briefings detalhados para suas campanhas'
+    title: 'Especialista em Briefing',
+    emoji: '📋',
+    description: 'Ajudo você a criar briefings detalhados e estratégicos para suas campanhas de marketing'
   },
   {
     id: 'sequencia-stories',
-    title: 'Sequência de Stories',
+    title: 'Criador de Stories',
     emoji: '📱',
-    description: 'Gere sequências de stories envolventes'
+    description: 'Desenvolvo sequências de stories envolventes que capturam a atenção do seu público'
   },
   {
     id: 'sequencia-carrosseis',
-    title: 'Sequência de Carrosséis',
-    emoji: '🖼️',
-    description: 'Desenvolva carrosséis impactantes'
+    title: 'Designer de Carrosséis',
+    emoji: '🎨',
+    description: 'Crio carrosséis impactantes com copy persuasivo para aumentar o engajamento'
   },
   {
     id: 'roteiro-reels',
-    title: 'Roteiro de Reels',
+    title: 'Roteirista de Reels',
     emoji: '🎬',
-    description: 'Roteiros criativos para seus reels'
+    description: 'Desenvolvo roteiros criativos e virais para seus reels nas redes sociais'
   },
   {
     id: 'mensagens-whatsapp',
-    title: 'Mensagens de WhatsApp',
+    title: 'Expert em WhatsApp',
     emoji: '💬',
-    description: 'Mensagens persuasivas para WhatsApp'
+    description: 'Crio mensagens persuasivas e sequências de vendas eficazes para WhatsApp'
   },
   {
     id: 'sequencia-emails',
-    title: 'Sequência de E-mails',
+    title: 'Especialista em E-mail',
     emoji: '✉️',
-    description: 'E-mails que convertem e engajam'
+    description: 'Desenvolvo e-mails que convertem, com copy que engaja e gera resultados'
   }
 ]
