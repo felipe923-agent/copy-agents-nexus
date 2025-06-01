@@ -4,10 +4,13 @@ import { agents } from '@/data/agents'
 import { AgentCard } from '@/components/AgentCard'
 import { ChatInterface } from '@/components/ChatInterface'
 import { useChatAgent } from '@/hooks/useChatAgent'
-import { Crown, Users, Target } from 'lucide-react'
+import { useAuth } from '@/contexts/AuthContext'
+import { Crown, Users, Target, LogOut } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 export const DashboardPage = () => {
   const { messages, loading, currentAgent, startChat, sendMessage, clearChat } = useChatAgent()
+  const { user, signOut } = useAuth()
 
   const handleAgentClick = (agentId: string) => {
     startChat(agentId)
@@ -43,16 +46,36 @@ export const DashboardPage = () => {
 
       {/* Header */}
       <header className="relative border-b border-slate-800/50 bg-slate-900/20 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-6 py-8 text-center">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Crown className="w-8 h-8 text-accent-gold" />
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-100 to-slate-300 bg-clip-text text-transparent">
-              Elite Copy Mentors
-            </h1>
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="flex justify-between items-center">
+            <div className="text-center flex-1">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <Crown className="w-8 h-8 text-accent-gold" />
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-100 to-slate-300 bg-clip-text text-transparent">
+                  Elite Copy Mentors
+                </h1>
+              </div>
+              <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                Acesso exclusivo aos melhores especialistas em copywriting do mercado
+              </p>
+            </div>
+            <div className="flex items-center gap-4">
+              {user && (
+                <div className="text-sm text-slate-400">
+                  Olá, {user.email}
+                </div>
+              )}
+              <Button
+                onClick={signOut}
+                variant="outline"
+                size="sm"
+                className="text-slate-300 border-slate-700 hover:bg-slate-800"
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                Sair
+              </Button>
+            </div>
           </div>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Acesso exclusivo aos melhores especialistas em copywriting do mercado
-          </p>
         </div>
       </header>
 
