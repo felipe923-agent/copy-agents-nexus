@@ -13,6 +13,15 @@ export interface ChatMessage {
   timestamp: Date
 }
 
+export interface Conversation {
+  id: string
+  title: string
+  agentId: string
+  messages: ChatMessage[]
+  createdAt: Date
+  updatedAt: Date
+}
+
 export interface WebhookResponse {
   copy: string
   success?: boolean

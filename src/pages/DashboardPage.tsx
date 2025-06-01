@@ -1,18 +1,18 @@
-import React from 'react'
+
+import React, { useState } from 'react'
 import { agents } from '@/data/agents'
 import { AgentCard } from '@/components/AgentCard'
 import { ChatInterface } from '@/components/ChatInterface'
-import { useChatAgent } from '@/hooks/useChatAgent'
 import { useAuth } from '@/contexts/AuthContext'
 import { Crown, Users, Target, LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 export const DashboardPage = () => {
-  const { messages, loading, currentAgent, startChat, sendMessage, clearChat } = useChatAgent()
+  const [currentAgent, setCurrentAgent] = useState<string | null>(null)
   const { user, signOut } = useAuth()
 
   const handleAgentClick = (agentId: string) => {
-    startChat(agentId)
+    setCurrentAgent(agentId)
   }
 
   const getCurrentAgentData = () => {
@@ -24,12 +24,8 @@ export const DashboardPage = () => {
   if (currentAgent && currentAgentData) {
     return (
       <ChatInterface
-        messages={messages}
-        loading={loading}
-        onSendMessage={sendMessage}
-        onBack={clearChat}
-        agentTitle={currentAgentData.title}
-        agentEmoji="🤖"
+        agent={currentAgentData}
+        onBack={() => setCurrentAgent(null)}
       />
     )
   }
@@ -126,7 +122,6 @@ export const DashboardPage = () => {
               <AgentCard
                 agent={agent}
                 onClick={() => handleAgentClick(agent.id)}
-                disabled={loading}
               />
             </div>
           ))}

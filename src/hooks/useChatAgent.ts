@@ -7,24 +7,15 @@ import { useToast } from '@/hooks/use-toast'
 const WEBHOOK_URL = 'https://REPLACE-WITH-MY-DOMAIN/webhook/agents-copy'
 
 export const useChatAgent = () => {
-  const [messages, setMessages] = useState<ChatMessage[]>([])
   const [loading, setLoading] = useState(false)
-  const [currentAgent, setCurrentAgent] = useState<string | null>(null)
   const { toast } = useToast()
 
-  const startChat = (agentId: string) => {
-    setCurrentAgent(agentId)
-    setMessages([{
-      id: Date.now().toString(),
-      content: 'Olá! Sou seu agente especializado. Como posso ajudá-lo hoje?',
-      role: 'assistant',
-      timestamp: new Date()
-    }])
-  }
-
-  const sendMessage = async (content: string) => {
-    if (!currentAgent) return
-
+  const sendMessage = async (
+    agentId: string, 
+    content: string, 
+    conversationMessages: ChatMessage[],
+    onMessageAdded: (message: ChatMessage) => void
+  ) => {
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
       content,
@@ -32,18 +23,18 @@ export const useChatAgent = () => {
       timestamp: new Date()
     }
 
-    setMessages(prev => [...prev, userMessage])
+    onMessageAdded(userMessage)
     setLoading(true)
 
     try {
-      console.log(`Sending message to agent: ${currentAgent}`)
+      console.log(`Sending message to agent: ${agentId}`)
       
       const response = await axios.post<WebhookResponse>(
         WEBHOOK_URL,
         { 
-          agent: currentAgent,
+          agent: agentId,
           message: content,
-          conversation: messages 
+          conversation: conversationMessages 
         },
         {
           headers: {
@@ -60,7 +51,7 @@ export const useChatAgent = () => {
           role: 'assistant',
           timestamp: new Date()
         }
-        setMessages(prev => [...prev, assistantMessage])
+        onMessageAdded(assistantMessage)
       } else {
         throw new Error('Resposta inválida da API')
       }
@@ -76,17 +67,8 @@ export const useChatAgent = () => {
     }
   }
 
-  const clearChat = () => {
-    setMessages([])
-    setCurrentAgent(null)
-  }
-
   return {
-    messages,
     loading,
-    currentAgent,
-    startChat,
-    sendMessage,
-    clearChat,
+    sendMessage
   }
 }
