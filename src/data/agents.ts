@@ -5,37 +5,37 @@ export const agents: Agent[] = [
   {
     id: 'briefing-campanha',
     title: 'Especialista em Briefing',
-    emoji: '📋',
+    icon: 'file-pen',
     description: 'Ajudo você a criar briefings detalhados e estratégicos para suas campanhas de marketing'
   },
   {
     id: 'sequencia-stories',
     title: 'Criador de Stories',
-    emoji: '📱',
+    icon: 'user',
     description: 'Desenvolvo sequências de stories envolventes que capturam a atenção do seu público'
   },
   {
     id: 'sequencia-carrosseis',
     title: 'Designer de Carrosséis',
-    emoji: '🎨',
+    icon: 'layers',
     description: 'Crio carrosséis impactantes com copy persuasivo para aumentar o engajamento'
   },
   {
     id: 'roteiro-reels',
     title: 'Roteirista de Reels',
-    emoji: '🎬',
+    icon: 'clapperboard',
     description: 'Desenvolvo roteiros criativos e virais para seus reels nas redes sociais'
   },
   {
     id: 'mensagens-whatsapp',
     title: 'Expert em WhatsApp',
-    emoji: '💬',
+    icon: 'phone-call',
     description: 'Crio mensagens persuasivas e sequências de vendas eficazes para WhatsApp'
   },
   {
     id: 'sequencia-emails',
     title: 'Especialista em E-mail',
-    emoji: '✉️',
+    icon: 'mail',
     description: 'Desenvolvo e-mails que convertem, com copy que engaja e gera resultados'
   }
 ]
