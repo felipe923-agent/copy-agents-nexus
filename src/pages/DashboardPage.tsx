@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { agents } from '@/data/agents'
 import { AgentCard } from '@/components/AgentCard'
@@ -30,7 +29,7 @@ export const DashboardPage = () => {
         onSendMessage={sendMessage}
         onBack={clearChat}
         agentTitle={currentAgentData.title}
-        agentEmoji={currentAgentData.emoji}
+        agentEmoji="🤖"
       />
     )
   }
