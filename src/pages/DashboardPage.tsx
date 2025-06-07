@@ -4,12 +4,13 @@ import { agents } from '@/data/agents'
 import { AgentCard } from '@/components/AgentCard'
 import { ChatInterface } from '@/components/ChatInterface'
 import { useAuth } from '@/contexts/AuthContext'
-import { Crown, Users, Target, LogOut } from 'lucide-react'
+import { Crown, Users, Target, LogOut, Shield } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Link } from 'react-router-dom'
 
 export const DashboardPage = () => {
   const [currentAgent, setCurrentAgent] = useState<string | null>(null)
-  const { user, signOut } = useAuth()
+  const { user, signOut, isAdmin } = useAuth()
 
   const handleAgentClick = (agentId: string) => {
     setCurrentAgent(agentId)
@@ -59,6 +60,19 @@ export const DashboardPage = () => {
                 <div className="text-sm text-slate-400">
                   Olá, {user.email}
                 </div>
+              )}
+              {isAdmin && (
+                <Button
+                  asChild
+                  variant="outline"
+                  size="sm"
+                  className="text-accent-gold border-accent-gold hover:bg-accent-gold/10"
+                >
+                  <Link to="/admin">
+                    <Shield className="w-4 h-4 mr-2" />
+                    Admin
+                  </Link>
+                </Button>
               )}
               <Button
                 onClick={signOut}
