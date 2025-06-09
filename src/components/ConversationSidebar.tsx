@@ -2,8 +2,9 @@
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Conversation, Agent } from '@/types/agents'
-import { Plus, MessageSquare, Trash2 } from 'lucide-react'
+import { Plus, MessageSquare, Trash2, X } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 interface ConversationSidebarProps {
   agent: Agent
@@ -12,6 +13,7 @@ interface ConversationSidebarProps {
   onConversationSelect: (conversationId: string) => void
   onNewConversation: () => void
   onDeleteConversation: (conversationId: string) => void
+  onClose?: () => void
 }
 
 export const ConversationSidebar: React.FC<ConversationSidebarProps> = ({
@@ -20,20 +22,35 @@ export const ConversationSidebar: React.FC<ConversationSidebarProps> = ({
   currentConversationId,
   onConversationSelect,
   onNewConversation,
-  onDeleteConversation
+  onDeleteConversation,
+  onClose
 }) => {
+  const isMobile = useIsMobile()
+
   return (
-    <div className="w-80 bg-slate-900/95 border-r border-slate-700/50 flex flex-col h-full">
+    <div className={`${isMobile ? 'w-80' : 'w-80'} bg-slate-900/95 border-r border-slate-700/50 flex flex-col h-full`}>
       {/* Header */}
       <div className="p-4 border-b border-slate-700/50">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-gradient-to-br from-accent-gold/15 to-accent-gold/5 rounded-lg flex items-center justify-center border border-accent-gold/20">
-            <MessageSquare className="w-5 h-5 text-accent-gold" />
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-accent-gold/15 to-accent-gold/5 rounded-lg flex items-center justify-center border border-accent-gold/20">
+              <MessageSquare className="w-5 h-5 text-accent-gold" />
+            </div>
+            <div>
+              <h2 className="font-semibold text-slate-100">{agent.title}</h2>
+              <p className="text-sm text-slate-400">Conversas</p>
+            </div>
           </div>
-          <div>
-            <h2 className="font-semibold text-slate-100">{agent.title}</h2>
-            <p className="text-sm text-slate-400">Conversas</p>
-          </div>
+          {isMobile && onClose && (
+            <Button
+              onClick={onClose}
+              variant="ghost"
+              size="sm"
+              className="text-slate-400 hover:text-slate-200"
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          )}
         </div>
         
         <Button 
